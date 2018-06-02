@@ -10,11 +10,9 @@ def get_article(url):
     soup.find(style="font-size:16px!important;font-weight:bold!important;").decompose()
     soup.find("div",id="article-headline-tags").decompose()
     article_div = soup.find("div",class_="entry_content")
-    article = article_div.get_text().strip()
+    article = article_div.get_text().strip().replace(u'\xa0', u' ')
     images = [link.get('src') for link in article_div.find_all("img")]
-    result_set = [title,title_image,article,images]
+    if len(images) is 0:
+        images = ''
+    result_set = {'title':title,'title_image':title_image,'article':article,'images': images}
     return result_set
-
-#test set
-get_article("https://www.allkpop.com/article/2017/12/hyuna-and-kards-somin-have-a-cute-interaction")
-get_article("https://www.allkpop.com/article/2018/05/kang-daniel-shocks-by-revealing-he-enjoys-eating-raw-bacon")
