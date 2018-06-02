@@ -10,6 +10,7 @@ def main():
     urls = list_urls(FILENAME)
     for submission in subreddit.stream.submissions():
         current_submission = reddit.submission(id=submission)
+        print(current_submission.domain)
         url = current_submission.url
         current_url = "{}:{}".format(current_submission.subreddit,url)
         if url not in urls and "allkpop" in url:
