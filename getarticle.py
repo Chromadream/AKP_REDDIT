@@ -12,7 +12,6 @@ def get_article(url):
     article_div = soup.find("div",class_="entry_content")
     article = article_div.get_text().strip().replace(u'\xa0', u' ')
     images = [link.get('src') for link in article_div.find_all("img")]
-    if len(images) is 0:
-        images = ''
-    result_set = {'title':title,'title_image':title_image,'article':article,'images': images}
+    image_set = ''.join(images)
+    result_set = {'title':title,'title_image':title_image,'article':article,'images': image_set}
     return result_set
