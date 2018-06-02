@@ -114,3 +114,4 @@ venv.bak/
 
 # Configuration file
 CONFIG.py
+persistence.txt
