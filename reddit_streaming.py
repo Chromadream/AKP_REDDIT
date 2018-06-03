@@ -10,11 +10,11 @@ def main():
     urls = list_urls(FILENAME)
     for submission in subreddit.stream.submissions():
         current_submission = reddit.submission(id=submission)
-        print(current_submission.domain)
         url = current_submission.url
         current_url = "{}:{}".format(current_submission.subreddit,url)
         if current_url not in urls and "allkpop" in url:
             result_set = get_article(url)
             make_comment(current_submission,result_set)
+            print("Success? {}".format(current_url))
             urls.append(current_url)
             append_url(FILENAME,current_url)
