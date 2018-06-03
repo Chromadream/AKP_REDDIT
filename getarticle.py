@@ -43,5 +43,3 @@ def get_article(url):
     image_set = image_set_format(images)
     result_set = {'title':title,'title_image':title_image,'article':article,'images': image_set}
     return result_set
-
-print(get_article("https://www.allkpop.com/article/2018/05/kang-daniel-shocks-by-revealing-he-enjoys-eating-raw-bacon"))
