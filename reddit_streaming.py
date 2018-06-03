@@ -13,7 +13,7 @@ def main():
         print(current_submission.domain)
         url = current_submission.url
         current_url = "{}:{}".format(current_submission.subreddit,url)
-        if url not in urls and "allkpop" in url:
+        if current_url not in urls and "allkpop" in url:
             result_set = get_article(url)
             make_comment(current_submission,result_set)
             urls.append(current_url)
