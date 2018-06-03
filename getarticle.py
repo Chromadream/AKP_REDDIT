@@ -35,11 +35,13 @@ def get_article(url):
     article_div = soup.find("div",class_="entry_content")
     article_div_div = article_div.find_all("div",recursive=False)
     text = [div.get_text().replace(u'\xa0', u' ').strip() for div in article_div_div][:-1]
+    images = [link.get('src') for link in article_div.find_all("img")]
     for div in article_div_div:
         div.decompose() #this is disgusting, but so is web scraping
     first_line = soup.find("div",class_="entry_content").get_text().strip()
     article = article_formatting([first_line.replace(u'\xa0', u' ')] + text)
-    images = [link.get('src') for link in article_div.find_all("img")]
     image_set = image_set_format(images)
     result_set = {'title':title,'title_image':title_image,'article':article,'images': image_set}
     return result_set
+
+print(get_article("https://www.allkpop.com/article/2018/05/kang-daniel-shocks-by-revealing-he-enjoys-eating-raw-bacon"))
