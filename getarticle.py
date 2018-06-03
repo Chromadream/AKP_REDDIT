@@ -30,7 +30,10 @@ def get_article(url):
     except AttributeError:
         title_image = ""
     #remove SEE ALSO and tags at the bottom before used by the article div
-    soup.find(style="font-size:16px!important;font-weight:bold!important;").decompose()
+    try:
+        soup.find(style="font-size:16px!important;font-weight:bold!important;").decompose()
+    except AttributeError:
+        pass
     soup.find("div",id="article-headline-tags").decompose()
     article_div = soup.find("div",class_="entry_content")
     article_div_div = article_div.find_all("div",recursive=False)
