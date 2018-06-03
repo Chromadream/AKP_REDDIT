@@ -7,7 +7,6 @@ def make_comment(current_submission, result_set):
     print(formatted_reply)
     try:
         current_submission.reply(formatted_reply)
-    except praw.exceptions.APIException as APIException:
-        print(APIException)
+    except praw.exceptions.APIException:
         time.sleep(10*60)
         current_submission.reply(formatted_reply)
