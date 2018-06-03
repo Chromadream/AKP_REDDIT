@@ -14,7 +14,7 @@ def article_formatting(article):
     for part in article:
         if (part == '' or part == ' ') and previous == '':
             pass
-        elif part == '' and previous != '':
+        elif (part == '' or part == ' ') and previous != '':
             string += WHITESPACE
         else:
             string += part
@@ -33,8 +33,8 @@ def get_article(url):
     soup.find(style="font-size:16px!important;font-weight:bold!important;").decompose()
     soup.find("div",id="article-headline-tags").decompose()
     article_div = soup.find("div",class_="entry_content")
-    article_div_div = article_div.find_all("div")
-    text = [div.get_text().replace(u'\xa0', u' ') for div in article_div_div][:-1]
+    article_div_div = article_div.find_all("div",recursive=False)
+    text = [div.get_text().replace(u'\xa0', u' ').strip() for div in article_div_div][:-1]
     for div in article_div_div:
         div.decompose() #this is disgusting, but so is web scraping
     first_line = soup.find("div",class_="entry_content").get_text().strip()
