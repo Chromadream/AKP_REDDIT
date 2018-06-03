@@ -114,4 +114,9 @@ venv.bak/
 
 # Configuration file
 CONFIG.py
+
+# Persistence file
 persistence.txt
+
+# development testing and sample
+sample.py
