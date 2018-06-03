@@ -5,7 +5,7 @@ TEMPLATE = """
 
 {}
 
-Images: {}
+{}
 
 *****
 
