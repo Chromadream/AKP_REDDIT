@@ -3,7 +3,9 @@ from bs4 import BeautifulSoup
 from template import WHITESPACE
 
 def image_set_format(image_set):
-    string = ""
+    if len(image_set) == 0:
+        return ""
+    string = "Images: "
     for i in range(len(image_set)):
         string += "[{}]({}) ".format(i+1,image_set[i])
     return string
