@@ -8,10 +8,10 @@ def image_set_format(image_set):
     if len(image_set) == 0:
         return ""
     string = "Images: "
-    for i in range(len(image_set)):
+    for i, image in enumerate(image_set):
         if image[0] == "/":
             image = AKP_DOMAIN + image
-        string += "[{}]({}) ".format(i+1,image_set[i])
+        string += "[{}]({}) ".format(i+1,image)
     return string
 
 def article_formatting(article):
