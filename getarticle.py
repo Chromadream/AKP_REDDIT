@@ -27,17 +27,17 @@ def article_formatting(article):
         previous = part
     return string
 
-def getTextWrapper(soupElem):
-    return getText(soupElem)[0].replace(u'\xa0', u' ').strip()
+def get_text_wrapper(soupElem):
+    return get_text(soupElem)[0].replace(u'\xa0', u' ').strip()
 
-def getText(soupElem, imgCounter=0):
+def get_text(soupElem, imgCounter=0):
     buff = ""
     if isinstance(soupElem, element.NavigableString):
         buff += soupElem
     elif isinstance(soupElem, element.Tag):
         if soupElem.contents:
             for child in soupElem.contents:
-                cBuff, cCount = getText(child, imgCounter)
+                cBuff, cCount = get_text(child, imgCounter)
                 buff += cBuff
                 imgCounter = cCount
         elif soupElem.name == 'img':
@@ -68,6 +68,6 @@ def get_article(url):
         pass
     soup.find("div",id="article-headline-tags").decompose()
     article_div = soup.find("div",class_="entry_content")
-    article = getTextWrapper(article_div)
+    article = get_text_wrapper(article_div)
     result_set = {'title':title,'title_image':title_image,'article':article}
     return result_set
