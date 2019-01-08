@@ -5,8 +5,6 @@ TEMPLATE = """
 
 {}
 
-{}
-
 *****
 
 *I am a bot that transcribes allkpop articles. PM this bot for feedback.*
@@ -17,3 +15,5 @@ TEMPLATE = """
 WHITESPACE = """
 
 """
+
+AKP_DOMAIN = "https://www.allkpop.com"

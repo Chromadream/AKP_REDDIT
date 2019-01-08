@@ -1,9 +1,8 @@
 from urllib.request import urlopen, Request
-from bs4 import BeautifulSoup
-from template import WHITESPACE
+from bs4 import BeautifulSoup, element
+from template import WHITESPACE, AKP_DOMAIN
 
-AKP_DOMAIN = "https://www.allkpop.com"
-
+# deprecated
 def image_set_format(image_set):
     if len(image_set) == 0:
         return ""
@@ -14,6 +13,7 @@ def image_set_format(image_set):
         string += "[{}]({}) ".format(i+1,image)
     return string
 
+# deprecated
 def article_formatting(article):
     string = ""
     previous = ''
@@ -27,10 +27,35 @@ def article_formatting(article):
         previous = part
     return string
 
+def get_text_wrapper(soup_elem):
+    return get_text(soup_elem)[0].replace(u'\xa0', u' ').strip()
+
+def get_text(soup_elem, img_count=0):
+    buff = ""
+    if isinstance(soup_elem, element.NavigableString):
+        buff += soup_elem
+    elif isinstance(soup_elem, element.Tag):
+        if soup_elem.contents:
+            for child in soup_elem.contents:
+                child_buff, img_count = get_text(child, img_count)
+                buff += child_buff
+        elif soup_elem.name == 'img':
+            try:
+                img_url = soup_elem.attrs['src']
+                if img_url[0] == '/':
+                    img_url = AKP_DOMAIN + img_url
+                img_count += 1
+                buff += "\n\n[image_%02d](%s)\n\n" % (img_count, img_url)
+            except KeyError:
+                pass
+        elif soup_elem.name == "br":
+            buff += "\n\n"
+    return buff, img_count
+
 def get_article(url):
     page = urlopen(Request(url, headers={'User-Agent': 'Mozilla'}))
     soup = BeautifulSoup(page,"html.parser")
-    title = soup.title.get_text()
+    title = soup.title.get_text().replace(' | allkpop','')
     try:
         title_image = soup.find("img",id="article-image").get("src")
     except AttributeError:
@@ -42,13 +67,6 @@ def get_article(url):
         pass
     soup.find("div",id="article-headline-tags").decompose()
     article_div = soup.find("div",class_="entry_content")
-    article_div_div = article_div.find_all("div",recursive=False)
-    text = [div.get_text().replace(u'\xa0', u' ').strip() for div in article_div_div][:-1]
-    images = [link.get('src') for link in article_div.find_all("img")]
-    for div in article_div_div:
-        div.decompose() #this is disgusting, but so is web scraping
-    first_line = soup.find("div",class_="entry_content").get_text().strip()
-    article = article_formatting([first_line.replace(u'\xa0', u' ')] + text)
-    image_set = image_set_format(images)
-    result_set = {'title':title,'title_image':title_image,'article':article,'images': image_set}
+    article = get_text_wrapper(article_div)
+    result_set = {'title':title,'title_image':title_image,'article':article}
     return result_set
