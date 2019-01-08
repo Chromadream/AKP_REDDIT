@@ -1,0 +1,6 @@
+OAUTH_SECRET=""
+OAUTH_CLIENT=""
+USERNAME=""
+PASSWORD=""
+SUBREDDITS="kpop"
+FILENAME="persistence.txt"
