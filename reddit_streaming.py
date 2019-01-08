@@ -14,7 +14,7 @@ def main():
         username=USERNAME,
         password=PASSWORD,
     )
-    subreddit = reddit.subreddit("kpop")
+    subreddit = reddit.subreddit(SUBREDDITS)
     urls = list_urls(FILENAME)
     instance_start = time.time()
     for submission in subreddit.stream.submissions():
