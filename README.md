@@ -18,7 +18,11 @@ A bot that scrapes main article from allkpop article submission on Reddit, then 
 
 * Create a Virtualenv
 
-* Create persistence.txt file and CONFIG.py file
+* `pip install -r requirements.txt`
+
+* copy `CONFIG.py.sample` as `CONFIG.py` and fill with necessary details
+
+* create a blank `requirements.txt`
 
 ## CONFIG.py contents
 
@@ -30,6 +34,6 @@ A bot that scrapes main article from allkpop article submission on Reddit, then 
 
 * Reddit password (PASSWORD)
 
-* Subreddits to stream (SUBREDDIT)
+* Subreddits to stream (SUBREDDITS)
 
-* Persistence filename (PERSISTENCE)
+* Persistence filename (FILENAME)
