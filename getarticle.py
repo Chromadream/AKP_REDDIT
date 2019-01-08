@@ -27,31 +27,30 @@ def article_formatting(article):
         previous = part
     return string
 
-def get_text_wrapper(soupElem):
-    return get_text(soupElem)[0].replace(u'\xa0', u' ').strip()
+def get_text_wrapper(soup_elem):
+    return get_text(soup_elem)[0].replace(u'\xa0', u' ').strip()
 
-def get_text(soupElem, imgCounter=0):
+def get_text(soup_elem, img_count=0):
     buff = ""
-    if isinstance(soupElem, element.NavigableString):
-        buff += soupElem
-    elif isinstance(soupElem, element.Tag):
-        if soupElem.contents:
-            for child in soupElem.contents:
-                cBuff, cCount = get_text(child, imgCounter)
-                buff += cBuff
-                imgCounter = cCount
-        elif soupElem.name == 'img':
+    if isinstance(soup_elem, element.NavigableString):
+        buff += soup_elem
+    elif isinstance(soup_elem, element.Tag):
+        if soup_elem.contents:
+            for child in soup_elem.contents:
+                child_buff, img_count = get_text(child, img_count)
+                buff += child_buff
+        elif soup_elem.name == 'img':
             try:
-                imgPath = soupElem.attrs['src']
-                if imgPath[0] == '/':
-                    imgPath = AKP_DOMAIN + imgPath
-                imgCounter += 1
-                buff += "\n\n[image_%02d](%s)\n\n" % (imgCounter, imgPath)
+                img_url = soup_elem.attrs['src']
+                if img_url[0] == '/':
+                    img_url = AKP_DOMAIN + img_url
+                img_count += 1
+                buff += "\n\n[image_%02d](%s)\n\n" % (img_count, img_url)
             except KeyError:
                 pass
-        elif soupElem.name == "br":
+        elif soup_elem.name == "br":
             buff += "\n\n"
-    return buff, imgCounter
+    return buff, img_count
 
 def get_article(url):
     page = urlopen(Request(url, headers={'User-Agent': 'Mozilla'}))
