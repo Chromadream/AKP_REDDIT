@@ -2,11 +2,15 @@ from urllib.request import urlopen, Request
 from bs4 import BeautifulSoup
 from template import WHITESPACE
 
+AKP_DOMAIN = "https://www.allkpop.com"
+
 def image_set_format(image_set):
     if len(image_set) == 0:
         return ""
     string = "Images: "
     for i in range(len(image_set)):
+        if image[0] == "/":
+            image = AKP_DOMAIN + image
         string += "[{}]({}) ".format(i+1,image_set[i])
     return string
 
