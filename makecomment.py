@@ -3,7 +3,7 @@ import time
 from template import TEMPLATE
 
 def formatting(result_set):
-    return TEMPLATE.format(result_set['title'],result_set['title_image'],result_set['article'],result_set['images'])
+    return TEMPLATE.format(result_set['title'],result_set['title_image'],result_set['article'])
 
 def make_comment(current_submission, result_set):
     formatted_reply = formatting(result_set)
